@@ -1,0 +1,121 @@
+{
+    "tables": {
+        "users": {
+            "tableName": "users",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "name": {
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "phone": {
+                    "field": "phone",
+                    "seqType": "Sequelize.STRING"
+                },
+                "address": {
+                    "allowNull": true,
+                    "field": "address",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "appointments": {
+            "tableName": "appointments",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "date": {
+                    "field": "date",
+                    "seqType": "Sequelize.DATE"
+                },
+                "symptoms": {
+                    "allowNull": true,
+                    "field": "symptoms",
+                    "seqType": "Sequelize.STRING"
+                },
+                "description": {
+                    "allowNull": true,
+                    "field": "description",
+                    "seqType": "Sequelize.STRING"
+                },
+                "medicines": {
+                    "allowNull": true,
+                    "field": "medicines",
+                    "seqType": "Sequelize.ARRAY(Sequelize.STRING)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "userId": {
+                    "allowNull": false,
+                    "references": {
+                        "model": "users",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "userId",
+                    "seqType": "Sequelize.INTEGER"
+                }
+            },
+            "indexes": []
+        },
+        "medicines": {
+            "tableName": "medicines",
+            "schema": {
+                "id": {
+                    "autoIncrement": true,
+                    "allowNull": false,
+                    "primaryKey": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "name": {
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        }
+    },
+    "revision": 2
+}

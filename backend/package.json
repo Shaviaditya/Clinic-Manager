@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "makemigrations": "./node_modules/sequelize-auto-migrations-v2/bin/makemigration.js",
+    "runmigrations": "./node_modules/sequelize-auto-migrations-v2/bin/runmigration.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.10.0",
+    "pg": "^8.11.5",
+    "sequelize": "^6.37.3",
+    "sequelize-auto-migrations-v2": "^1.2.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
+  }
+}

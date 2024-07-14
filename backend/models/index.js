@@ -6,15 +6,13 @@ const sequelize = new Sequelize(config.database,config.username,config.password,
 
 const models = [
   require('./users.model')(sequelize),
-  require('./appointments.model')(sequelize),
-  require('./medicines.model')(sequelize)
+  require('./appointments.model')(sequelize)
 ]
 
 const {
   models: {
     user,
-    appointment,
-    medicine
+    appointment
   }
 } = sequelize;
 

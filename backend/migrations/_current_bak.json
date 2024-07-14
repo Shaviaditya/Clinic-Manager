@@ -50,20 +50,30 @@
                     "field": "date",
                     "seqType": "Sequelize.DATE"
                 },
+                "complaints": {
+                    "allowNull": true,
+                    "field": "complaints",
+                    "seqType": "Sequelize.STRING"
+                },
+                "diagnosis": {
+                    "allowNull": true,
+                    "field": "diagnosis",
+                    "seqType": "Sequelize.STRING"
+                },
                 "symptoms": {
                     "allowNull": true,
                     "field": "symptoms",
                     "seqType": "Sequelize.STRING"
                 },
-                "description": {
+                "advice": {
                     "allowNull": true,
-                    "field": "description",
+                    "field": "advice",
                     "seqType": "Sequelize.STRING"
                 },
-                "medicines": {
+                "facility": {
                     "allowNull": true,
-                    "field": "medicines",
-                    "seqType": "Sequelize.ARRAY(Sequelize.INTEGER)"
+                    "field": "facility",
+                    "seqType": "Sequelize.STRING"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -103,6 +113,18 @@
                     "field": "name",
                     "seqType": "Sequelize.STRING"
                 },
+                "dosage": {
+                    "field": "dosage",
+                    "seqType": "Sequelize.STRING"
+                },
+                "duration": {
+                    "field": "duration",
+                    "seqType": "Sequelize.STRING"
+                },
+                "quantity": {
+                    "field": "quantity",
+                    "seqType": "Sequelize.STRING"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -112,10 +134,21 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
+                },
+                "appointmentId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "appointments",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "field": "appointmentId",
+                    "seqType": "Sequelize.INTEGER"
                 }
             },
             "indexes": []
         }
     },
-    "revision": 1
+    "revision": 3
 }

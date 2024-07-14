@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { sequelize ,models } = require('../models');
 
 const {
@@ -10,6 +11,7 @@ const {
 
 //create user
 const funccreateUser = async (req, res) => {
+  console.log(req)
   const name = req.body.name;
   const phone = req.body.phone;
   const address = req.body.address
@@ -32,7 +34,7 @@ const funccreateUser = async (req, res) => {
 
 // get all users
 const funcgetUsers = (req,res) => {
-  user.findAll().then((data) => {
+  user.findAll({ where: { name: { [Op.like]: `%${req.query.name}%`}}}).then((data) => {
     res.status(200).json({users: data})
   }).catch(err => {
     console.log(err);

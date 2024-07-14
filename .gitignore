@@ -1,0 +1,4 @@
+config
+.env
+backend/node_modules
+clinic-system/node_modules

@@ -11,19 +11,19 @@ const {
 
 //create user
 const funccreateUser = async (req, res) => {
-  console.log(req)
-  const name = req.body.name;
-  const phone = req.body.phone;
-  const address = req.body.address
-  await user.create({
+  const {name,phone,address,age,height,weight,bloodPressure} = req.body
+  await user.create({    
     name: name,
     phone: phone,
-    address: address
+    address: address,
+    age: age,
+    height: height,
+    weight: weight,
+    bloodPressure: bloodPressure
   })
     .then(result => {
-      console.log('Created user');
       res.status(201).json({
-        message: 'user created successfully!',
+        message: 'Customer Added!',
         user: result
       });
     })

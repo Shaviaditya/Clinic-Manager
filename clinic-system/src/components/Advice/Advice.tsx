@@ -3,12 +3,13 @@ import AdvicePopup from './AdvicePopup.tsx';
 import { Advice } from '../../interfaces/IAdvices.tsx';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
-const Advices: React.FC = () => {
+const Advices = (addAdvice) => {
   const [advices, setAdvices] = useState<Advice[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const addAdvice = (newAdvice: Advice) => {
+  const handleAdvice = (newAdvice: Advice) => {
     setAdvices([...advices, newAdvice]);
+    addAdvice(advices)
   };
 
   return (
@@ -36,7 +37,7 @@ const Advices: React.FC = () => {
       <AdvicePopup
         isOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        addAdvice={addAdvice}
+        addAdvice={handleAdvice}
       />
     </div>
   );

@@ -3,12 +3,13 @@ import FacilityPopup from './FacilityPopup.tsx';
 import { IFacility } from '../../interfaces/IFacility.tsx';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
-const Facility: React.FC = () => {
+const Facility = (addFacility) => {
   const [facility, setFacility] = useState<IFacility[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const addFacility = (newFacility: IFacility) => {
+  const handleFacility = (newFacility: IFacility) => {
     setFacility([...facility, newFacility]);
+    addFacility(facility)
   };
 
   return (
@@ -36,7 +37,7 @@ const Facility: React.FC = () => {
       <FacilityPopup
         isOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        addFacility={addFacility}
+        addFacility={handleFacility}
       />
     </div>
   );

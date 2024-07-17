@@ -3,12 +3,13 @@ import DiagnosisPopup from './DiagnosisPopup.tsx';
 import { IDiagnosis } from '../../interfaces/IDiagnosis.tsx';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
-const Diagnosis: React.FC = () => {
+const Diagnosis = (addDiagnosis) => {
   const [diagnosis, setDiagnosis] = useState<IDiagnosis[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const addDiagnosis = (newDiagnosis: IDiagnosis) => {
+  const handleDiagnosis = (newDiagnosis: IDiagnosis) => {
     setDiagnosis([...diagnosis, newDiagnosis]);
+    addDiagnosis(diagnosis)
   };
 
   return (
@@ -36,7 +37,7 @@ const Diagnosis: React.FC = () => {
       <DiagnosisPopup
         isOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        addDiagnosis={addDiagnosis}
+        addDiagnosis={handleDiagnosis}
       />
     </div>
   );

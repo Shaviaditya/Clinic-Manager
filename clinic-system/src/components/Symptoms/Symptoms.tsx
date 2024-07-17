@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import SymptomPopup from './SymptomsPopup.tsx';
 import { Symptom } from '../../interfaces/ISymptoms.tsx';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-
-const Symptoms: React.FC = () => {
+interface SymptomsProps {
+  addSymptoms: (symptom: Symptom[])=> void;
+}
+const Symptoms: React.FC<SymptomsProps> = ({addSymptoms}) => {
   const [symptoms, setSymptoms] = useState<Symptom[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const addSymptom = (newSymptom: Symptom) => {
+  const addSymptom = (newSymptom: Symptom) => {    
     setSymptoms([...symptoms, newSymptom]);
+    addSymptoms(symptoms)
   };
 
   return (

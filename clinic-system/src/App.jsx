@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SearchComponent from './components/SearchComponent';
-import AddUserPage from './components/AddUserPage';
-import UserDetails from './components/UserDetails';
+import AddUserPage from './components/AddUserPage.tsx';
+import UserDetails from './components/UserDetails.tsx';
 import MedicalReceipt from './components/MedicalReciept.tsx'
 import NavBar from './components/NavBar';
 

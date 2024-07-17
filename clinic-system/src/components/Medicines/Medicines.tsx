@@ -3,12 +3,13 @@ import MedicinesPopup from './MedicinesPopup.tsx';
 import { Medicine } from '../../interfaces/IMedicines.tsx';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
-const Medicines: React.FC = () => {
+const Medicines = (addMedicines) => {
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const addMedicine = (newMedicine: Medicine) => {
     setMedicines([...medicines, newMedicine]);
+    addMedicines(medicines)
   };
 
   return (

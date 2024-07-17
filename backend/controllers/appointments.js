@@ -1,10 +1,22 @@
 const { sequelize, models } = require("../models");
-const PDFDocument = require("pdfkit");
-const fs = require("fs");
+const puppeteer = require('puppeteer')
+const fs = require('fs-extra')
+const hbs = require('handlebars')
 const path = require("path");
+require('dotenv').config()
+
+const compile = async (templateName,data) => {
+    data.diagnosis = data.diagnosis.split(',');
+    data.advice = data.advice.split(',');
+    data.symptoms = data.symptoms.split(',');
+    data.facility = data.facility.split(',');
+    const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
+    const html = await fs.readFile(filePath,'utf-8')
+    return hbs.compile(html)(data)
+}
 
 const {
-  models: { user,appointment, medicine },
+  models: { user,appointment },
 } = sequelize;
 
 // get all users
@@ -21,61 +33,47 @@ const funcgetAppointments = async (req, res) => {
 
 //create user
 const funccreateAppointment = async (req, res, next) => {
-  const date = Date.now();
-  const symptoms = req.body.symptoms;
-  const description = req.body.description;
-  const medicines = req.body.medicines.split(",");
-  const medicineIds = await Promise.all(
-    medicines.map(async (item) => {
-      const data = await medicine
-        .findOrCreate({ where: { name: item } })
-        .then((res, isCreated) => {
-          return res[0].dataValues.name;
-        });
-      return data;
-    })
-  );
-  await appointment
-    .create({
-      date: date,
+  const { diagnosis, symptoms, advice, facility, complaints, medicines } = req.body;
+  try {
+    await appointment.create({
+      date: Date.now(),
       symptoms: symptoms,
-      description: description,
-      medicines: medicineIds,
+      diagnosis: diagnosis,
+      advice: advice,
+      facility: facility,
+      complaints: complaints,
+      medicines: medicines,
       userId: req.body.id,
-    })
-    .then(async (result) => {
-      const userData = await user.findOne({where:{id: req.body.id}})
-      const doc = new PDFDocument();
-      const filePath = path.join(__dirname, "output.pdf");
-      const writeStream = fs.createWriteStream(filePath);
-      doc.pipe(writeStream);
-      doc.fontSize(20).text("Medical Receipt", { align: "center" });
-      doc.moveDown();
-      doc.fontSize(14).text(`Name: ${userData.name}`);
-      doc.text(`Phone: ${userData.phone}`);
-      doc.text(`Address: ${userData.address}`);
-      doc.moveDown();
-      doc.text(`Symptoms: ${symptoms}`);
-      doc.moveDown();
-      doc.text(`Medicines: ${medicines}`);
-
-      doc.end();
-
-      // Send the PDF file to the client after it's been written
-      writeStream.on("finish", () => {
-        res.download(filePath, "medical_receipt.pdf", (err) => {
-          if (err) {
-            console.error("Error sending PDF:", err);
-          }
-          // Remove the file after download
-          fs.unlinkSync(filePath);
-        });
-      });
-      // res.status(201).json({ result: "success" });
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
     });
+
+    const userData = await user.findOne({ where: { id: req.body.id } });
+    const data = { ...userData.dataValues, ...req.body };
+    const folderName = `${data.name}_${data.id}`;
+    const folderPath = path.join(process.env.FOLDERPATH,folderName);
+
+    // Create the folder if it doesn't exist
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath, { recursive: true });
+    }
+
+    const pdfName = `${new Date().toISOString().split('T')[0]}_${data.id}.pdf`;
+    const pdfPath = path.join(folderPath, pdfName);
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const content = await compile('template', req.body);
+    await page.setContent(content);
+    await page.emulateMediaType('screen');
+    await page.pdf({
+      path: pdfPath,
+      format: 'A4',
+      printBackground: true
+    });
+    await browser.close();
+    res.status(200).json({ success: true, pdfUrl: pdfPath });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 module.exports = {

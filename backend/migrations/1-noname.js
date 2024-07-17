@@ -6,7 +6,6 @@ var Sequelize = require('sequelize');
  * Actions summary:
  *
  * createTable "users", deps: []
- * createTable "medicines", deps: []
  * createTable "appointments", deps: [users]
  *
  **/
@@ -14,7 +13,7 @@ var Sequelize = require('sequelize');
 var info = {
     "revision": 1,
     "name": "noname",
-    "created": "2024-07-08T20:34:09.288Z",
+    "created": "2024-07-17T14:34:21.037Z",
     "comment": ""
 };
 
@@ -24,54 +23,47 @@ var migrationCommands = [{
             "users",
             {
                 "id": {
-                    "type": Sequelize.INTEGER,
+                    "type": Sequelize.UUID,
                     "field": "id",
                     "primaryKey": true,
                     "allowNull": false,
-                    "autoIncrement": true
+                    "defaultValue": Sequelize.UUIDV4
                 },
                 "name": {
                     "type": Sequelize.STRING,
-                    "field": "name"
+                    "field": "name",
+                    "allowNull": false
                 },
                 "phone": {
                     "type": Sequelize.STRING,
-                    "field": "phone"
+                    "field": "phone",
+                    "allowNull": false
                 },
                 "address": {
                     "type": Sequelize.STRING,
                     "field": "address",
-                    "allowNull": true
+                    "allowNull": true,
+                    "defaultValue": "N/A"
                 },
-                "createdAt": {
-                    "type": Sequelize.DATE,
-                    "field": "createdAt",
-                    "allowNull": false
-                },
-                "updatedAt": {
-                    "type": Sequelize.DATE,
-                    "field": "updatedAt",
-                    "allowNull": false
-                }
-            },
-            {}
-        ]
-    },
-    {
-        fn: "createTable",
-        params: [
-            "medicines",
-            {
-                "id": {
-                    "type": Sequelize.INTEGER,
-                    "field": "id",
-                    "primaryKey": true,
-                    "allowNull": false,
-                    "autoIncrement": true
-                },
-                "name": {
+                "age": {
                     "type": Sequelize.STRING,
-                    "field": "name"
+                    "field": "age",
+                    "defaultValue": "N/A"
+                },
+                "height": {
+                    "type": Sequelize.STRING,
+                    "field": "height",
+                    "defaultValue": "N/A"
+                },
+                "weight": {
+                    "type": Sequelize.STRING,
+                    "field": "weight",
+                    "defaultValue": "N/A"
+                },
+                "bloodPressure": {
+                    "type": Sequelize.STRING,
+                    "field": "bloodPressure",
+                    "defaultValue": "N/A"
                 },
                 "createdAt": {
                     "type": Sequelize.DATE,
@@ -93,28 +85,43 @@ var migrationCommands = [{
             "appointments",
             {
                 "id": {
-                    "type": Sequelize.INTEGER,
+                    "type": Sequelize.UUID,
                     "field": "id",
                     "primaryKey": true,
                     "allowNull": false,
-                    "autoIncrement": true
+                    "defaultValue": Sequelize.UUIDV4
                 },
                 "date": {
                     "type": Sequelize.DATE,
                     "field": "date"
+                },
+                "complaints": {
+                    "type": Sequelize.ARRAY(Sequelize.STRING),
+                    "field": "complaints",
+                    "allowNull": true
+                },
+                "diagnosis": {
+                    "type": Sequelize.STRING,
+                    "field": "diagnosis",
+                    "allowNull": true
                 },
                 "symptoms": {
                     "type": Sequelize.STRING,
                     "field": "symptoms",
                     "allowNull": true
                 },
-                "description": {
+                "advice": {
                     "type": Sequelize.STRING,
-                    "field": "description",
+                    "field": "advice",
+                    "allowNull": true
+                },
+                "facility": {
+                    "type": Sequelize.STRING,
+                    "field": "facility",
                     "allowNull": true
                 },
                 "medicines": {
-                    "type": Sequelize.ARRAY(Sequelize.INTEGER),
+                    "type": Sequelize.ARRAY(Sequelize.STRING),
                     "field": "medicines",
                     "allowNull": true
                 },
@@ -129,7 +136,7 @@ var migrationCommands = [{
                     "allowNull": false
                 },
                 "userId": {
-                    "type": Sequelize.INTEGER,
+                    "type": Sequelize.UUID,
                     "field": "userId",
                     "onUpdate": "CASCADE",
                     "onDelete": "CASCADE",

@@ -1,19 +1,19 @@
 const { DataTypes } = require('sequelize');
-const complaints = {
-    chiefComplaints: DataTypes.STRING,
-    clincialFindings: DataTypes.STRING
-}
-const medicines = {
-    name: DataTypes.STRING,
-    dosage: DataTypes.STRING,
-    duration: DataTypes.STRING,
-    quantity: DataTypes.STRING
-}
+// const complaints = {
+//     chiefComplaints: DataTypes.STRING,
+//     clinicalFindings: DataTypes.STRING
+// }
+// const medicines = {
+//     name: DataTypes.STRING,
+//     dosage: DataTypes.STRING,
+//     duration: DataTypes.STRING,
+//     quantity: DataTypes.STRING
+// }
 module.exports = (sequelize) => {
     const appointment = sequelize.define('appointment', {
         id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
         },
@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
             type: DataTypes.DATE,            
         },
         complaints: {
-            type: DataTypes.ARRAY((DataTypes.JSON)(complaints)),
+            type: DataTypes.ARRAY(DataTypes.JSON),
             allowNull: true
         },
         diagnosis: {
@@ -41,7 +41,7 @@ module.exports = (sequelize) => {
             allowNull: true
         },
         medicines: {
-            type: DataTypes.ARRAY((DataTypes.JSON)(medicines)),
+            type: DataTypes.ARRAY(DataTypes.JSON),
             allowNull: true
         }
     });

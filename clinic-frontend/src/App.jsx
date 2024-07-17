@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SearchComponent from './components/SearchComponent';
+import SearchComponent from './components/SearchComponent.jsx';
 import AddUserPage from './components/AddUserPage.tsx';
 import UserDetails from './components/UserDetails.tsx';
 import MedicalReceipt from './components/MedicalReciept.tsx'
-import NavBar from './components/NavBar';
+import NavBar from './components/NavBar.js';
 
 
 const App = () => {

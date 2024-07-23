@@ -1,9 +1,15 @@
-Sure! Here is a `README.md` template for your "Clinic Manager" project:
-
-```markdown
 # Clinic Manager
 
 Clinic Manager is a web application designed to streamline the management of a clinic. It consists of a frontend built with React and a backend built with Node.js.
+## Technologies Used
+
+![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=flat&logo=sequelize&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Puppeteer](https://img.shields.io/badge/Puppeteer-4D4D4D?style=flat&logo=puppeteer&logoColor=white)
+![Material UI](https://img.shields.io/badge/Material%20UI-0081CB?style=flat&logo=material-ui&logoColor=white)
 
 ## Table of Contents
 
@@ -34,7 +40,7 @@ Clinic Manager is a web application designed to streamline the management of a c
 ```bash
 git clone https://github.com/your-username/clinic-manager.git
 cd clinic-manager
-```
+
 
 ### Frontend Setup
 

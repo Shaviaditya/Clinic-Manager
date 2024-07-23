@@ -3,11 +3,11 @@ import { Complaint } from "./IComplaints";
 import { IDiagnosis } from "./IDiagnosis";
 import { IFacility } from "./IFacility";
 import { Medicine } from "./IMedicines";
-import { Symptom } from "./ISymptoms";
+import { ISymptoms } from "./ISymptoms";
 
 export interface Receipt {
   id?: string;
-  symptoms: Symptom[];
+  symptoms: ISymptoms[];
   advice: Advice[];
   diagnosis: IDiagnosis[];
   facility: IFacility[];

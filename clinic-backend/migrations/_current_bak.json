@@ -87,7 +87,7 @@
                 },
                 "date": {
                     "field": "date",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.DATE"
                 },
                 "complaints": {
                     "allowNull": true,
@@ -144,5 +144,5 @@
             "indexes": []
         }
     },
-    "revision": 2
+    "revision": 1
 }

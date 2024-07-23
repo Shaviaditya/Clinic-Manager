@@ -12,6 +12,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
+import Container from "@mui/material/Container";
 
 const SearchComponent = () => {
   const [query, setQuery] = useState("");
@@ -28,14 +29,13 @@ const SearchComponent = () => {
 
   const handleSearch = async (event) => {
     event.preventDefault();
-    console.log(query);
     try {
       const { data } = await axios.get("http://localhost:5700/users", {
         headers: {
           "Content-Type": "application/json",
         },
         params: {
-          name: query,
+          name: query.toLowerCase(),
         },
       });
       setSearchResults(data.users);
@@ -45,78 +45,142 @@ const SearchComponent = () => {
   };
 
   return (
-    <form onSubmit={handleSearch}>
+    <Container
+      disableGutters
+      maxWidth={false}
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        height: "100vh",
+        width: "100vw",
+      }}
+    >
       <Box
         sx={{
-          "& > :not(style)": { width: "70ch", marginLeft: "35%" },
+          width: "50%",
+          bgcolor: "primary.main",
+          color: "white",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "20px",
         }}
-        noValidate
-        autoComplete="off"
       >
-        <TextField
-          id="outlined-basic"
-          label="Enter your search query"
-          variant="outlined"
-          value={query}
-          type="text"
-          onChange={handleInputChange}
-        />
+        <Typography variant="h2" fontWeight="bold">
+          Clinic System
+        </Typography>
+        <Typography variant="subtitle1" mt={2}>
+          Empowering healthcare with advanced technology.
+        </Typography>
       </Box>
       <Box
         sx={{
-          "& > :not(style)": {
-            width: "15ch",
-            marginLeft: "47%",
-            marginTop: "25px",
-          },
+          width: "50%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={query.trim().length === 0}
-        >
-          Search
-        </Button>
-      </Box>
-      {searchResults.length > 0 && (
-        <Box sx={{ margin: "20px" }}>
-          <ListSubheader component="div" id="nested-list-subheader">
-            Registered Patients History
-          </ListSubheader>
-          {searchResults.map((user) => (
-            <Card key={user.id} sx={{ marginBottom: "20px" }}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {user.name}
-                </Typography>
-                <CardActions>
-                  <IconButton onClick={() => handleClick(user.id)}>
-                    {expandedUserId === user.id ? <ExpandLess /> : <ExpandMore />}
-                  </IconButton>
-                </CardActions>
-                <Collapse in={expandedUserId === user.id} timeout="auto" unmountOnExit>
-                  <CardContent>
-                    <Typography variant="body2">
-                      User ID: {user.id}
+        <form onSubmit={handleSearch} style={{ width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "20px",
+            }}
+          >
+            <TextField
+              id="outlined-basic"
+              label="Enter your search query"
+              variant="outlined"
+              value={query}
+              type="text"
+              onChange={handleInputChange}
+              sx={{ width: "60%" }}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "20px",
+            }}
+          >
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={query.trim().length === 0}
+              sx={{ width: "20%" }}
+            >
+              Search
+            </Button>
+          </Box>
+          {searchResults.length > 0 && (
+            <Box sx={{ margin: "20px", width: "100%" }}>
+              <ListSubheader component="div" id="nested-list-subheader">
+                Registered Patients History
+              </ListSubheader>
+              {searchResults.map((user) => (
+                <Card
+                  key={user.id}
+                  sx={{
+                    marginBottom: "20px",
+                    borderRadius: "10px",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    <Typography variant="h5" component="div">
+                      {user.name}
                     </Typography>
-                    <Typography variant="body2">
-                      Phone: {user.phone}
-                    </Typography>
-                    <Typography variant="body2">
-                    Address: {user.address}
-                    </Typography>
-                    <Button type="button" variant="contained" href={`/users/${user.id}`}>
-                        Other Details and Generate Receipt
-                    </Button>
+                    <CardActions>
+                      <IconButton onClick={() => handleClick(user.id)}>
+                        {expandedUserId === user.id ? (
+                          <ExpandLess />
+                        ) : (
+                          <ExpandMore />
+                        )}
+                      </IconButton>
+                    </CardActions>
+                    <Collapse
+                      in={expandedUserId === user.id}
+                      timeout="auto"
+                      unmountOnExit
+                    >
+                      <CardContent>
+                        <Typography variant="body2">
+                          User ID: {user.id}
+                        </Typography>
+                        <Typography variant="body2">
+                          Phone: {user.phone}
+                        </Typography>
+                        <Typography variant="body2">
+                          Address: {user.address}
+                        </Typography>
+                        <Button
+                          type="button"
+                          variant="contained"
+                          href={`/users/${user.id}`}
+                        >
+                          Other Details and Generate Receipt
+                        </Button>
+                      </CardContent>
+                    </Collapse>
                   </CardContent>
-                </Collapse>
-              </CardContent>
-            </Card>
-          ))}
-        </Box>
-      )}
-    </form>
+                </Card>
+              ))}
+            </Box>
+          )}
+        </form>
+      </Box>
+    </Container>
   );
 };
 

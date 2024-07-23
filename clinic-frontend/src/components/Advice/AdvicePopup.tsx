@@ -19,6 +19,7 @@ const AdvicesPopup: React.FC<AdvicesPopupProps> = ({isOpen, setIsModalOpen, addA
     if (advice.advice) {
       addAdvice(advice);
       setIsModalOpen(false);
+      setAdvice(DEFAULT_Advice)
     } else {
       alert("Please fill in all fields");
     }

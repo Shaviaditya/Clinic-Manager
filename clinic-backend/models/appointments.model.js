@@ -1,14 +1,4 @@
 const { DataTypes } = require('sequelize');
-// const complaints = {
-//     chiefComplaints: DataTypes.STRING,
-//     clinicalFindings: DataTypes.STRING
-// }
-// const medicines = {
-//     name: DataTypes.STRING,
-//     dosage: DataTypes.STRING,
-//     duration: DataTypes.STRING,
-//     quantity: DataTypes.STRING
-// }
 module.exports = (sequelize) => {
     const appointment = sequelize.define('appointment', {
         id: {
@@ -18,7 +8,7 @@ module.exports = (sequelize) => {
             primaryKey: true
         },
         date: {
-            type: DataTypes.DATE,            
+            type: DataTypes.STRING,            
         },
         complaints: {
             type: DataTypes.ARRAY(DataTypes.JSON),

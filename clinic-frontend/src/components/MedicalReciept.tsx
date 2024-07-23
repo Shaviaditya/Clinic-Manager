@@ -9,11 +9,15 @@ import Facility from "./Facility/Facility.tsx";
 import Symptoms from "./Symptoms/Symptoms.tsx";
 import { Receipt, DEFAULT_RECEIPT } from "../interfaces/IReceipt.tsx";
 import { Button, Container, Typography, Card, CardContent, Grid, Box, CircularProgress } from "@mui/material";
+import { Worker, Viewer } from "@react-pdf-viewer/core";
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 const MedicalReceipt: React.FC = () => {
   const { id } = useParams();
   const [user, setUser] = useState<any>(null);
   const [receipt, setReceipt] = useState<Receipt>(DEFAULT_RECEIPT);
+  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -62,16 +66,16 @@ const MedicalReceipt: React.FC = () => {
     try {
       const response = await axios.post(
         "http://localhost:5700/app",
-        receipt,
+        JSON.stringify(receipt),
         {
           headers: {
             "Content-Type": "application/json",
           },
-          responseType: "json",
+          responseType: "blob",
         }
       );
-      if (response.data.success) {
-        window.open(response.data.pdfUrl, "_blank");
+      if (response.status === 200) {
+        setPdfBlob(response.data);
       } else {
         console.error("Error creating appointment:", response.data.error);
       }
@@ -126,7 +130,7 @@ const MedicalReceipt: React.FC = () => {
           <Grid item xs={12}>
             <Card>
               <CardContent>
-                <Advices addAdvices={handleAdvice} />
+                <Advices adviceHandler={handleAdvice} />
               </CardContent>
             </Card>
           </Grid>
@@ -144,6 +148,15 @@ const MedicalReceipt: React.FC = () => {
           </Button>
         </Box>
       </form>
+      {pdfBlob && (
+        <div style={{ height: '750px' }}>
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+            <Viewer
+              fileUrl={URL.createObjectURL(pdfBlob)}
+            />
+          </Worker>
+        </div>
+      )}
     </Container>
   );
 };

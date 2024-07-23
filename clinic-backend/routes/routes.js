@@ -11,5 +11,5 @@ router.delete('/users/:userId', userController.funcdeleteUser); // /users/:userI
 
 router.get('/app', appController.funcgetAppointments)
 router.post('/app',appController.funccreateAppointment)
-
+router.get('/app/pdf', appController.funcViewPdf)
 module.exports = router;

@@ -59,8 +59,8 @@ const Complaints = ({ handleComplaints }) => {
           <TableBody>
             {complaints.map((complaint, index) => (
               <TableRow key={index}>
-                <TableCell>{complaint.chiefComplaint}</TableCell>
-                <TableCell>{complaint.findings}</TableCell>
+                <TableCell>{complaint.chiefComplaints}</TableCell>
+                <TableCell>{complaint.clinicalFindings}</TableCell>
                 <TableCell>
                   <IconButton onClick={() => handleEditClick(complaint, index)}>
                     <EditIcon />
@@ -91,16 +91,16 @@ const Complaints = ({ handleComplaints }) => {
             label="Chief Complaint"
             type="text"
             fullWidth
-            value={selectedComplaint?.chiefComplaint || ''}
-            onChange={(e) => setSelectedComplaint({ ...selectedComplaint, chiefComplaint: e.target.value })}
+            value={selectedComplaint?.chiefComplaints || ''}
+            onChange={(e) => setSelectedComplaint({ ...selectedComplaint, chiefComplaints: e.target.value })}
           />
           <TextField
             margin="dense"
             label="Clinical Findings"
             type="text"
             fullWidth
-            value={selectedComplaint?.findings || ''}
-            onChange={(e) => setSelectedComplaint({ ...selectedComplaint, findings: e.target.value })}
+            value={selectedComplaint?.clinicalFindings || ''}
+            onChange={(e) => setSelectedComplaint({ ...selectedComplaint, clinicalFindings: e.target.value })}
           />
         </DialogContent>
         <DialogActions>

@@ -1,7 +1,7 @@
-export interface Symptom {
+export interface ISymptoms {
     symptom?: string
 }
 
-export const DEFAULT_Symptom : Symptom = {
+export const DEFAULT_Symptom : ISymptoms = {
     symptom: ""
 }

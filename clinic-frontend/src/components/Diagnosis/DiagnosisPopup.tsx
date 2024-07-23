@@ -5,9 +5,9 @@ import { IDiagnosis, DEFAULT_Diagnosis } from '../../interfaces/IDiagnosis.tsx';
 interface DiagnosisPopupProps {
   isOpen: boolean;
   setIsModalOpen: (isOpen: boolean)=> void;
-  addDiagnosis: (diagnosis: IDiagnosis)=> void;
+  handleDiagnosis: (diagnosis: IDiagnosis)=> void;
 }
-const DiagnosisPopup: React.FC<DiagnosisPopupProps> = ({isOpen, setIsModalOpen, addDiagnosis }) => {
+const DiagnosisPopup: React.FC<DiagnosisPopupProps> = ({isOpen, setIsModalOpen, handleDiagnosis }) => {
   const [diagnosis,setDiagnosis] = useState<IDiagnosis>(DEFAULT_Diagnosis)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +17,8 @@ const DiagnosisPopup: React.FC<DiagnosisPopupProps> = ({isOpen, setIsModalOpen, 
 
   const handleAddDiagnosis = () => {
     if (diagnosis.diagnosis) {
-      addDiagnosis(diagnosis);
+      handleDiagnosis(diagnosis)
+      setDiagnosis(DEFAULT_Diagnosis)
       setIsModalOpen(false);
     } else {
       alert("Please fill in all fields");

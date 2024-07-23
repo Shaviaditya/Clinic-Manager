@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, TextField, Button } from '@mui/material';
-import { Symptom, DEFAULT_Symptom } from '../../interfaces/ISymptoms.tsx';
+import { ISymptoms, DEFAULT_Symptom } from '../../interfaces/ISymptoms.tsx';
 
 interface SymptomsPopupProps {
   isOpen: boolean;
   setIsModalOpen: (isOpen: boolean)=> void;
-  addSymptom: (symptom: Symptom)=> void;
+  addSymptom: (symptom: ISymptoms)=> void;
 }
 const SymptomsPopup: React.FC<SymptomsPopupProps> = ({isOpen, setIsModalOpen, addSymptom }) => {
-  const [symptom,setSymptom] = useState<Symptom>(DEFAULT_Symptom)
+  const [symptoms,setSymptoms] = useState<ISymptoms>(DEFAULT_Symptom)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setSymptom((prevSymptom) => ({ ...prevSymptom, [name]: value }));
+    setSymptoms((prevSymptoms) => ({ ...prevSymptoms, [name]: value }));
   };
 
-  const handleAddSymptom = () => {
-    if (symptom.symptom) {
-      addSymptom(symptom);
+  const handleAddSymptoms = () => {
+    if (symptoms.symptom) {
+      addSymptom(symptoms);
       setIsModalOpen(false);
+      setSymptoms(DEFAULT_Symptom)
     } else {
       alert("Please fill in all fields");
     }
@@ -42,18 +43,18 @@ const SymptomsPopup: React.FC<SymptomsPopupProps> = ({isOpen, setIsModalOpen, ad
         }}
       >
         <Typography variant="h6" component="h2">
-          Add Symptom
+          Add Symptoms
         </Typography>
         <TextField
-          label="Symptom"
+          label="Symptoms"
           name="symptom"
-          value={symptom.symptom}
+          value={symptoms.symptom}
           onChange={handleChange}
           fullWidth
           margin="normal"
         />
         <Box mt={2}>
-          <Button variant="contained" color="primary" onClick={handleAddSymptom}>
+          <Button variant="contained" color="primary" onClick={handleAddSymptoms}>
             Add Item
           </Button>
           <Button variant="outlined" color="secondary" onClick={() => setIsModalOpen(false)} style={{ marginLeft: '10px' }}>

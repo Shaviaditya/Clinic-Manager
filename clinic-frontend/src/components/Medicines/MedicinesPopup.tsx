@@ -20,6 +20,7 @@ const MedicinesPopup: React.FC<MedicinesPopupProps> = ({ isOpen, setIsModalOpen,
     if (medicine.name && medicine.dosage && medicine.quantity && medicine.duration) {
       addMedicine(medicine);
       setIsModalOpen(false);
+      setMedicine(DEFAULT_Medicine);
     } else {
       alert("Please fill in all fields");
     }

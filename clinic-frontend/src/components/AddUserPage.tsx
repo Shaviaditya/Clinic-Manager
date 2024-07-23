@@ -17,7 +17,7 @@ const AddUserPage: React.FC = () => {
     event.preventDefault();
     try {
       await axios.post("http://localhost:5700/users", {
-        name: userData.name,
+        name: (userData.name)?.toLowerCase(),
         address: userData.address,
         phone: userData.phone,
         age: userData.age,

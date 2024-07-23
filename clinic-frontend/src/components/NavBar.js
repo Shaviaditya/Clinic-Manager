@@ -11,7 +11,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 
 function NavBar() {
   return (
-    <AppBar position="static" sx={{marginBottom: "100px"}}>
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -48,11 +48,11 @@ function NavBar() {
               }}
             >
               <MenuItem key="1" >
-                <Typography textAlign="center">Add New Patient</Typography>
+                <Typography textAlign="center">Home</Typography>
               </MenuItem>
               <MenuItem key="2" >
-                <Typography textAlign="center">Add Medicine</Typography>
-              </MenuItem>
+                <Typography textAlign="center">Add New Patient</Typography>
+              </MenuItem>              
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -75,20 +75,21 @@ function NavBar() {
             Clinic System
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button
+          <Button
               key="1"
+              sx={{ my: 2, color: "white", display: "block" }}
+              href="/"
+            >
+              Home
+            </Button>
+            <Button
+              key="2"
               sx={{ my: 2, color: "white", display: "block" }}
               href="/add-user"
               // onClick={navigate('/add-user')}
             >
               Add new Patient
-            </Button>
-            <Button
-              key="2"
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              Add Medicine
-            </Button>
+            </Button>            
           </Box>
         </Toolbar>
       </Container>

@@ -19,6 +19,7 @@ const FacilityPopup: React.FC<FacilityPopupProps> = ({isOpen, setIsModalOpen, ad
     if (facility.facility) {
       addFacility(facility);
       setIsModalOpen(false);
+      setFacility(DEFAULT_Facility)
     } else {
       alert("Please fill in all fields");
     }

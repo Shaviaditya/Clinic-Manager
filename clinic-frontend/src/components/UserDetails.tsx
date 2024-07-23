@@ -18,13 +18,17 @@ import {
   Save as SaveIcon,
   Cancel as CancelIcon,
 } from "@mui/icons-material";
+import { Viewer, Worker } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
 
-const UserDetail: React.FC = () => {
+const UserDetail: React.FC = () => {  
   const { id } = useParams();
   const [user, setUser] = useState<any>(null);
-  const [editFields, setEditFields] = useState<any>({});
+  const [editFields, setEditFields] = useState<any>({ id: id });
   const [about, setAbout] = useState(true);
-
+  const [openedPdfId, setOpenedPdfId] = useState<string | null>(null);
+  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -38,9 +42,30 @@ const UserDetail: React.FC = () => {
         console.error("Error fetching user details:", error);
       }
     };
-
+    
     fetchUser();
   }, [id]);
+
+  const handleClick = async (filename: string, appointmentId: string) => {
+    if (openedPdfId === appointmentId) {
+      setOpenedPdfId(null);
+      setPdfBlob(null);
+    } else {
+      const response = await axios.get(`http://localhost:5700/app/pdf?path=${filename}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        responseType: "blob",
+      });
+
+      if (response.status === 200) {
+        setOpenedPdfId(appointmentId);
+        setPdfBlob(response.data);
+      } else {
+        console.error("Error creating appointment:", response.data.error);
+      }
+    }
+  };
 
   const handleEditChange = (field: string, value: string) => {
     setEditFields({ ...editFields, [field]: value });
@@ -137,7 +162,7 @@ const UserDetail: React.FC = () => {
                   </Grid>
                 ))}
               </Grid>
-              {Object.keys(editFields).length > 0 && (
+              {Object.keys(editFields).length > 1 && (
                 <Box mt={2} display="flex" justifyContent="flex-end">
                   <Button
                     variant="contained"
@@ -169,6 +194,17 @@ const UserDetail: React.FC = () => {
               <CardContent>
                 <Typography>Medical ID: {history.id}</Typography>
                 <Typography>Date: {history.date.split("T")[0]}</Typography>
+                <button
+                  key={history.id}
+                  onClick={() => handleClick(history.uri, history.id)}
+                >
+                  {openedPdfId === history.id ? "Close Prescription" : "View Prescription"}
+                </button>
+                {openedPdfId === history.id && pdfBlob !== null && (
+                  <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                    <Viewer fileUrl={URL.createObjectURL(pdfBlob)} />
+                  </Worker>
+                )}
               </CardContent>
             </Card>
           ))}

@@ -16,9 +16,10 @@ const ComplaintsPopup: React.FC<ComplaintsPopupProps> = ({isOpen, setIsModalOpen
   };
 
   const handleAddComplaint = () => {
-    if (complaint.chiefComplaint && complaint.findings) {
+    if (complaint.chiefComplaints && complaint.clinicalFindings) {
       addComplaint(complaint);
       setIsModalOpen(false);
+      setComplaint(DEFAULT_Complaint)
     } else {
       alert("Please fill in all fields");
     }
@@ -46,16 +47,16 @@ const ComplaintsPopup: React.FC<ComplaintsPopupProps> = ({isOpen, setIsModalOpen
         </Typography>
         <TextField
           label="Chief Complaint"
-          name="chiefComplaint"
-          value={complaint.chiefComplaint}
+          name="chiefComplaints"
+          value={complaint.chiefComplaints}
           onChange={handleChange}
           fullWidth
           margin="normal"
         />
         <TextField
           label="Clinical Findings"
-          name="findings"
-          value={complaint.findings}
+          name="clinicalFindings"
+          value={complaint.clinicalFindings}
           onChange={handleChange}
           fullWidth
           margin="normal"

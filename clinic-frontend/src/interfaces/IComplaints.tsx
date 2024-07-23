@@ -1,9 +1,9 @@
 export interface Complaint {
-    chiefComplaint?: string,
-    findings?: string
+    chiefComplaints?: string,
+    clinicalFindings?: string
 }
 
 export const DEFAULT_Complaint : Complaint = {
-    chiefComplaint: "",
-    findings: ""
+    chiefComplaints: "",
+    clinicalFindings: ""
 }

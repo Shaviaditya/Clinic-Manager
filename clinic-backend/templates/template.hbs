@@ -4,35 +4,111 @@
     <title>Medical Prescription</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+            background-color: #f9f9f9;
+        }
+        h3, h5 {
+            color: #2c3e50;
+            margin-top: 40px; /* Added space above the headers */
+        }
+        h3:first-of-type {
+            margin-top: 20px; /* Less space for the first header */
+        }
+        p {
+            font-size: 13px;
+        }
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .flex-item {
+            flex: 1 1 45%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin: 5px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .flex-item p {
+            margin: 5px 0;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 12px; /* Smaller font size for table content */
         }
         table, th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
         }
         th, td {
-            padding: 10px;
+            padding: 12px;
             text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
         .bulleted-list {
             list-style-type: disc;
             margin: 10px 0;
             padding-left: 20px;
         }
+        .flex-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .flex-list-item {
+            flex: 1 1 45%;
+            margin: 5px 0;
+            font-size: 12px; /* Smaller font size for list items */
+        }
     </style>
 </head>
 <body>
 
-    <h1>Medical Prescription</h1>
+    <div style="margin-top: 100px;"></div> <!-- Added space for the header -->
 
-    <h2>Date</h2>
-    <p>{{date}}</p>
+    <h3>Medical Prescription</h3>
 
-    <h2>Chief Complaints and Clinical Findings</h2>
+    <div class="flex-container">
+        <div class="flex-item">
+            <p><strong>Name:</strong> {{name}}</p>
+            <p><strong>Age:</strong> {{age}}</p>
+            <p><strong>Phone:</strong> {{phone}}</p>
+        </div>
+        <div class="flex-item">
+            <p><strong>Height:</strong> {{height}}</p>
+            <p><strong>Weight:</strong> {{weight}}</p>
+            <p><strong>Blood Pressure:</strong> {{bloodPressure}}</p>
+        </div>
+    </div>
+
+    <div class="flex-container">
+        <div class="flex-item">
+            <p><strong>Date:</strong> {{date}}</p>
+        </div>
+    </div>
+
+    {{#if complaints.length}}
+    <h5>Chief Complaints and Clinical Findings</h5>
     <table>
         <thead>
             <tr>
@@ -49,36 +125,54 @@
             {{/each}}
         </tbody>
     </table>
+    {{/if}}
 
-    <h2>Diagnosis</h2>
-    <ul class="bulleted-list">
+    {{#if diagnosis.length}}
+    <h5>Diagnosis</h5>
+    <div class="flex-list">
         {{#each diagnosis}}
-        <li>{{this}}</li>
+        <div class="flex-list-item">
+            <li>{{this}}</li>
+        </div>
         {{/each}}
-    </ul>
+    </div>
+    {{/if}}
 
-    <h2>Symptoms</h2>
-    <ul class="bulleted-list">
+    {{#if symptoms.length}}
+    <h5>Symptoms</h5>
+    <div class="flex-list">
         {{#each symptoms as |symptom|}}
-        <li>{{symptom}}</li>
+        <div class="flex-list-item">
+            <li>{{symptom}}</li>
+        </div>
         {{/each}}
-    </ul>
+    </div>
+    {{/if}}
 
-    <h2>Advice</h2>
-    <ul class="bulleted-list">
+    {{#if advice.length}}
+    <h5>Advice</h5>
+    <div class="flex-list">
         {{#each advice as |ad|}}
-        <li>{{ad}}</li>
+        <div class="flex-list-item">
+            <li>{{ad}}</li>
+        </div>
         {{/each}}
-    </ul>
+    </div>
+    {{/if}}
 
-    <h2>Facility</h2>
-    <ul class="bulleted-list">
+    {{#if facility.length}}
+    <h5>Facility</h5>
+    <div class="flex-list">
         {{#each facility as |fac|}}
-        <li>{{fac}}</li>
+        <div class="flex-list-item">
+            <li>{{fac}}</li>
+        </div>
         {{/each}}
-    </ul>
+    </div>
+    {{/if}}
 
-    <h2>Medicines</h2>
+    {{#if medicines.length}}
+    <h5>Medicines</h5>
     <table>
         <thead>
             <tr>
@@ -99,6 +193,9 @@
             {{/each}}
         </tbody>
     </table>
+    {{/if}}
+
+    <div style="margin-bottom: 40px;"></div> <!-- Added space for the footer -->
 
 </body>
 </html>

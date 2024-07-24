@@ -5,7 +5,6 @@ import Complaints from "./Complaints/Complaints.tsx";
 import Medicines from "./Medicines/Medicines.tsx";
 import Diagnosis from "./Diagnosis/Diagnosis.tsx";
 import Advices from "./Advice/Advice.tsx";
-import Facility from "./Facility/Facility.tsx";
 import Symptoms from "./Symptoms/Symptoms.tsx";
 import { Receipt, DEFAULT_RECEIPT } from "../interfaces/IReceipt.tsx";
 import { Button, Container, Typography, Card, CardContent, Grid, Box, CircularProgress } from "@mui/material";
@@ -43,10 +42,6 @@ const MedicalReceipt: React.FC = () => {
 
   const handleDiagnosis = (data: any) => {
     setReceipt((prev) => ({ ...prev, diagnosis: data }));
-  };
-
-  const handleFacility = (data: any) => {
-    setReceipt((prev) => ({ ...prev, facility: data }));
   };
 
   const handleMedicine = (data: any) => {
@@ -131,13 +126,6 @@ const MedicalReceipt: React.FC = () => {
             <Card>
               <CardContent>
                 <Advices adviceHandler={handleAdvice} />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <CardContent>
-                <Facility addFacility={handleFacility} />
               </CardContent>
             </Card>
           </Grid>

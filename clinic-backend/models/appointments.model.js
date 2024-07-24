@@ -26,10 +26,6 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true
         },
-        facility: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
         medicines: {
             type: DataTypes.ARRAY(DataTypes.JSON),
             allowNull: true

@@ -9,7 +9,6 @@ const compile = async (templateName,data) => {
     data.diagnosis = data.diagnosis.length > 0 ? data.diagnosis.split(','):[];
     data.advice = data.advice.length > 0 ? data.advice.split(','):[];
     data.symptoms = data.symptoms.length > 0 ? data.symptoms.split(','): [];
-    data.facility = data.facility.length > 0 ? data.facility.split(',') : [];
     const filePath = path.join(process.cwd(),'templates',`${templateName}.hbs`)
     const html = await fs.readFile(filePath,'utf-8')    
     return hbs.compile(html)(data)
@@ -45,12 +44,11 @@ const funcViewPdf = async(req,res) => {
 }
 //create user
 const funccreateAppointment = async (req, res, next) => {
-  const { diagnosis, symptom, advice, facility, complaints, medicines } = req.body;
+  const { diagnosis, symptom, advice, complaints, medicines } = req.body;
   const medicalData = {
     diagnosis: diagnosis ? diagnosis.map(item => item.diagnosis).toString() : "",
     symptoms: symptom ? symptom.map(item => item.symptom).toString() : "",
     advice: advice ? advice.map(item => item.advice).toString() : "",
-    facility: facility ? facility.map(item => item.facility).toString() : "",
     complaints: complaints,
     medicines: medicines,
     id: req.body.id
@@ -65,7 +63,6 @@ const funccreateAppointment = async (req, res, next) => {
       prev.symptoms = medicalData.symptoms;
       prev.diagnosis = medicalData.diagnosis;
       prev.advice = medicalData.advice;
-      prev.facility = medicalData.facility;
       prev.complaints = medicalData.complaints;
       prev.medicines = medicalData.medicines;
       await prev.save();
@@ -74,8 +71,7 @@ const funccreateAppointment = async (req, res, next) => {
         date: currentDate,
         symptoms: medicalData.symptoms,
         diagnosis: medicalData.diagnosis,
-        advice: medicalData.advice,
-        facility: medicalData.facility,
+        advice: medicalData.advice,        
         complaints: medicalData.complaints,
         medicines: medicalData.medicines,
         userId: medicalData.id,

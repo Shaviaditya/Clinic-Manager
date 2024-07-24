@@ -109,11 +109,6 @@
                     "field": "advice",
                     "seqType": "Sequelize.STRING"
                 },
-                "facility": {
-                    "allowNull": true,
-                    "field": "facility",
-                    "seqType": "Sequelize.STRING"
-                },
                 "medicines": {
                     "allowNull": true,
                     "field": "medicines",
@@ -144,5 +139,5 @@
             "indexes": []
         }
     },
-    "revision": 2
+    "revision": 3
 }

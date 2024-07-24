@@ -16,7 +16,7 @@ const AddUserPage: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:5700/users", {
+      const response = await axios.post("http://localhost:5700/users", {
         name: (userData.name)?.toLowerCase(),
         address: userData.address,
         phone: userData.phone,
@@ -29,7 +29,8 @@ const AddUserPage: React.FC = () => {
           'Content-Type': 'application/json',
         },
       });
-      navigate("/");
+      console.log(response.data)
+      navigate(`/users/${response.data.user.id}`);
     } catch (error) {
       console.error("Error:", error);
     }

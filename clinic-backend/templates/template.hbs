@@ -5,8 +5,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 20px;
-            padding: 20px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 10px;
             max-width: 800px;
@@ -15,10 +14,7 @@
         }
         h3, h5 {
             color: #2c3e50;
-            margin-top: 40px; /* Added space above the headers */
-        }
-        h3:first-of-type {
-            margin-top: 20px; /* Less space for the first header */
+            margin-bottom: 4px;
         }
         p {
             font-size: 13px;
@@ -27,36 +23,37 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .flex-item {
             flex: 1 1 45%;
             box-sizing: border-box;
             padding: 10px;
-            margin: 5px;
+            margin: 2px;
             background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .flex-item p {
-            margin: 5px 0;
+            margin: 2px 0;
         }
         table {
-            width: 100%;
+            width: 90%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 3px;
+            margin-bottom: 5px;
+            margin-left: auto;
+            margin-right: auto;
             background-color: #fff;
             border-radius: 5px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             font-size: 12px; /* Smaller font size for table content */
         }
         table, th, td {
             border: 1px solid #ddd;
         }
         th, td {
-            padding: 12px;
+            padding: 7px;
             text-align: left;
         }
         th {
@@ -68,17 +65,13 @@
         }
         .bulleted-list {
             list-style-type: disc;
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-        .flex-list {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .flex-list-item {
-            flex: 1 1 45%;
             margin: 5px 0;
-            font-size: 12px; /* Smaller font size for list items */
+            padding-left: 10px;
+        }
+
+        .flex-list-item {
+            margin: 2px 0;
+            font-size: 12px; 
         }
     </style>
 </head>
@@ -155,17 +148,6 @@
         {{#each advice as |ad|}}
         <div class="flex-list-item">
             <li>{{ad}}</li>
-        </div>
-        {{/each}}
-    </div>
-    {{/if}}
-
-    {{#if facility.length}}
-    <h5>Facility</h5>
-    <div class="flex-list">
-        {{#each facility as |fac|}}
-        <div class="flex-list-item">
-            <li>{{fac}}</li>
         </div>
         {{/each}}
     </div>

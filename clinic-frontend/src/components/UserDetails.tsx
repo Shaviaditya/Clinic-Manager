@@ -57,12 +57,13 @@ const UserDetail: React.FC = () => {
         },
         responseType: "blob",
       });
-
+      console.log(response)
       if (response.status === 200) {
         setOpenedPdfId(appointmentId);
         setPdfBlob(response.data);
       } else {
-        console.error("Error creating appointment:", response.data.error);
+        setOpenedPdfId(null);
+        setPdfBlob(null);
       }
     }
   };
@@ -200,11 +201,15 @@ const UserDetail: React.FC = () => {
                 >
                   {openedPdfId === history.id ? "Close Prescription" : "View Prescription"}
                 </button>
-                {openedPdfId === history.id && pdfBlob !== null && (
-                  <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                    <Viewer fileUrl={URL.createObjectURL(pdfBlob)} />
-                  </Worker>
-                )}
+                {(openedPdfId === history.id) ? (
+                  ( pdfBlob !== null) ? (<>
+                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                      <Viewer fileUrl={URL.createObjectURL(pdfBlob)} />
+                    </Worker>
+                    </>): ( <>
+                  <Typography variant="h6"> Prescription Removed or Deleted. </Typography>
+                </>)
+                ) : <></>}
               </CardContent>
             </Card>
           ))}

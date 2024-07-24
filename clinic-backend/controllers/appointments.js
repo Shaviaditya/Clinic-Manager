@@ -32,15 +32,19 @@ const funcgetAppointments = async (req, res) => {
 // View PDF
 const funcViewPdf = async (req, res) => {
   const filename = req.query.path;
-  fs.readFile(filename, (err, data) => {
-    if (err) {
-      res.status(404).send('File not found');
-      return;
-    }
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'inline; filename=' + path.basename(filename));
-    res.send(data);
-  });
+  if(!fs.existsSync(filename)){
+    res.send(null)
+  } else {
+    fs.readFile(filename, (err, data) => {
+      if (err) {
+        res.status(404).send('File not found');
+        return;
+      }
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'inline; filename=' + path.basename(filename));
+      res.send(data);
+    });
+  }
 };
 
 // Create or update appointment and generate PDF
@@ -85,7 +89,7 @@ const funccreateAppointment = async (req, res, next) => {
     }
 
     const data = { ...userData.dataValues, ...medicalData, date: currentDate };
-    const folderName = `${data.name.replace(/\s+/g, "")}${data.id}`;
+    const folderName = `${data.name.replace(/\s+/g, "")}${data.phone}`;
     const folderPath = path.join(process.env.FOLDERPATH, folderName);
 
     // Log the folder path
@@ -120,7 +124,7 @@ const funccreateAppointment = async (req, res, next) => {
     res.status(200).send(pdfBuffer);
   } catch (err) {
     console.error("Error creating appointment:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).send(null)
   }
 };
 

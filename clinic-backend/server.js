@@ -29,7 +29,6 @@ app.use((error, req, res, next) => {
 
 //sync database
 sequelize.authenticate().then(() => {
-  sequelize.sync()
   console.log(`Database Connected`)
   app.listen(process.env.PORT)  
 }).catch(err => {

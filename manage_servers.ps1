@@ -3,6 +3,10 @@ param (
 )
 
 function Start-Servers {
+    # Start PostgreSQL service
+    Write-Output "Starting PostgreSQL service..."
+    Start-Service -Name "postgresql-x64-16"
+
     # Navigate to the frontend directory and install dependencies
     Write-Output "Installing dependencies for the frontend..."
     Set-Location -Path "C:\Users\rudra\OneDrive\Desktop\Clinic-Manager\clinic-frontend" -ErrorAction Stop
@@ -24,6 +28,9 @@ function Start-Servers {
     $backendProcess = Start-Process npm -ArgumentList "run dev" -NoNewWindow -PassThru
     $backendPid = $backendProcess.Id
     $backendPid | Out-File -FilePath "$PSScriptRoot\backend.pid"
+
+    # Register the exit event to stop servers
+    Register-EngineEvent PowerShell.Exiting -Action { Stop-Servers }
 }
 
 function Stop-Servers {
@@ -32,7 +39,7 @@ function Stop-Servers {
         $frontendPid = Get-Content "$PSScriptRoot\frontend.pid"
         if ($frontendPid) {
             Write-Output "Stopping the frontend server with PID $frontendPid..."
-            Stop-Process -Id $frontendPid -ErrorAction SilentlyContinue
+            Stop-Process -Id $frontendPid -Force -ErrorAction SilentlyContinue
             Remove-Item -Path "$PSScriptRoot\frontend.pid"
         } else {
             Write-Output "Frontend PID not found."
@@ -46,7 +53,7 @@ function Stop-Servers {
         $backendPid = Get-Content "$PSScriptRoot\backend.pid"
         if ($backendPid) {
             Write-Output "Stopping the backend server with PID $backendPid..."
-            Stop-Process -Id $backendPid -ErrorAction SilentlyContinue
+            Stop-Process -Id $backendPid -Force -ErrorAction SilentlyContinue
             Remove-Item -Path "$PSScriptRoot\backend.pid"
         } else {
             Write-Output "Backend PID not found."
@@ -54,6 +61,7 @@ function Stop-Servers {
     } else {
         Write-Output "Backend PID file not found."
     }
+
 }
 
 switch ($action) {

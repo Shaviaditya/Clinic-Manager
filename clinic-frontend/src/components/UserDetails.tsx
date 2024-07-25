@@ -41,8 +41,7 @@ const UserDetail: React.FC = () => {
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
-    };
-    
+    }; 
     fetchUser();
   }, [id]);
 

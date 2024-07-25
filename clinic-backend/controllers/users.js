@@ -48,7 +48,7 @@ const funcgetUser = async (req, res) => {
     data = data.toJSON();
     if (data) {
       data.appointments.forEach(history => {
-        const folderPath = path.join(process.env.FOLDERPATH, `${data.name.replace(/\s+/g, "")}${data.id}`);
+        const folderPath = path.join(process.env.FOLDERPATH, `${data.name.replace(/\s+/g, "")}${data.phone}`);
         const pdfName = `${history.date}.pdf`;
         const urlPath = path.join(folderPath, pdfName);
         history.uri = urlPath;

@@ -7,24 +7,16 @@ function Start-Servers {
     Write-Output "Starting PostgreSQL service..."
     Start-Service -Name "postgresql-x64-16"
 
-    # Navigate to the frontend directory and install dependencies
-    Write-Output "Installing dependencies for the frontend..."
-    Set-Location -Path "C:\Users\rudra\OneDrive\Desktop\Clinic-Manager\clinic-frontend" -ErrorAction Stop
-    npm install
-
     # Start the frontend server
     Write-Output "Starting the frontend server..."
+    Set-Location -Path "C:\Users\rudra\OneDrive\Desktop\Clinic-Manager\clinic-frontend" -ErrorAction Stop
     $frontendProcess = Start-Process npm -ArgumentList "start" -NoNewWindow -PassThru
     $frontendPid = $frontendProcess.Id
     $frontendPid | Out-File -FilePath "$PSScriptRoot\frontend.pid"
 
-    # Navigate to the backend directory and install dependencies
-    Write-Output "Installing dependencies for the backend..."
-    Set-Location -Path "C:\Users\rudra\OneDrive\Desktop\Clinic-Manager\clinic-backend" -ErrorAction Stop
-    npm install
-
     # Start the backend server
     Write-Output "Starting the backend server..."
+    Set-Location -Path "C:\Users\rudra\OneDrive\Desktop\Clinic-Manager\clinic-backend" -ErrorAction Stop
     $backendProcess = Start-Process npm -ArgumentList "run dev" -NoNewWindow -PassThru
     $backendPid = $backendProcess.Id
     $backendPid | Out-File -FilePath "$PSScriptRoot\backend.pid"
